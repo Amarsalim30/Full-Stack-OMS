@@ -1,0 +1,20 @@
+name: Auto-assign new issues to me
+on:
+  issues:
+    types: [opened]
+jobs:
+  auto-assign:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign issue to me
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issueNumber = context.issue.number;
+            const me = "Amarsalim30"; // Replace with your username
+            await github.rest.issues.addAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              assignees: [me]
+            });
